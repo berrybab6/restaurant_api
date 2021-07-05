@@ -1,0 +1,24 @@
+[
+    {
+        "model": "api.food",
+        "id": 1,
+        "fields": {
+            "name": "Pasta Sego",
+            "description": "Tasty pasta",
+            "type": "breakfast",
+            "price": 35,
+            "fastingFood": true
+        }
+    },
+    {
+        "model": "api.food",
+        "id": 2,
+        "fields": {
+            "name": "Enkulal Sels",
+            "description": "Enkulal",
+            "type": "breakfast",
+            "price": 35,
+            "fastingFood": false
+        }
+    }
+]

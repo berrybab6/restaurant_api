@@ -38,7 +38,43 @@ class CreateFood(graphene.Mutation):
         food_inistance.save()
         return CreateFood(food=food_inistance)
 
+class UpdateFood(graphene.Mutation):
+    class Arguments:
+        food_data = FoodInput(required=True)
+    food = graphene.Field(FoodType)
+
+    @staticmethod
+    def mutate(root, info, food_data=None):
+        food_instance = Food.objects.get(id=food_data.id)
+
+        if food_instance:
+            food_instance.name = food_data.name
+            food_instance.description = food_data.description
+            food_instance.type = food_data.type
+            food_instance.price = food_data.price
+            food_instance.fastingFood = food_data.fastingFood
+            food_instance.save()
+            return UpdateFood(food=food_instance)
+        return UpdateFood(food=None)
+
+        
+class DeleteFood(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID()
+
+    food = graphene.Field(FoodType)
+
+    @staticmethod
+    def mutate(root, info, id):
+        food_instance = Food.objects.get(pk=id)
+        food_instance.delete()
+
+        return None
+
 class Mutation(graphene.ObjectType):
     create_food = CreateFood.Field()
+    update_food = UpdateFood.Field()
+    delete_food = DeleteFood.Field()
+
 
 schema = graphene.Schema(query=Query, mutation=Mutation)
